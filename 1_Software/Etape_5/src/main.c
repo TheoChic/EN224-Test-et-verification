@@ -7,18 +7,36 @@
 
 int PGCD(int A, int B)
 {
-	assert((A > 0) && (A < 65536));
-	assert((B > 0) && (B < 65536));
+	assert((A < 65536) && (A>= 0));
+	assert((B < 65536) && (B>= 0)); // rajouter les nombres négatifs
+	
+	int A_start, B_start = A, B;
 
-	while ( A != B){
-		if (A > B){
-			A = A - B;
-		}else{
-			B = B - A;
-		}
-	}
-	return A;
+    if ((A == 0) && (B == 0))
+    {
+        return 0;
+    }else if (A == 0){
+        return B; 
+    } else if (B == 0){
+        return A;
+    }else{ 
+        while ( A != B){
+            if (A > B){
+                A = A - B;
+            }else{
+                B = B - A;
+            }
+        }
+    }
+
+	assert((A >= 0) && (A <= 65535));
+	assert((A <= A_start) && (A <= B_start));
+	assert((A_start % A == 0) && (B_start % A == 0 ));
+
+
+    return A;
 }
+
 
 int PGCD_verif(int N1, int N2){
 	int reste;
@@ -59,19 +77,16 @@ int main (int argc, char * argv []){
 			a = randA();
 			b = randB();
 			printf("\n~~~~~Essai n°%d~~~~~\n\t", (i+1));
-			if ((a < 1) || (b < 1)){
-				printf("ERREUR : Une des deux valeurs a ou b est en dehors de l'intervalle [0;65535]\n");
-			}else {
-				printf("Valeur de A : %d\t Valeur de B : %d\n", a, b);
-				int result = PGCD(a, b);
-
-				assert(result == PGCD_verif(a, b));
-
-				printf("~~~~~Résultat : %d~~~~~\t ~~~~~PGCD Vérif : %d~~~~~~\n", result,PGCD_verif(a, b));
-			}
 			
+			printf("Valeur de A : %d\t Valeur de B : %d\n", a, b);
+
+			int result = PGCD(a, b);
+			printf("~~~~~Résultat : %d~~~~~\t ~~~~~PGCD Vérif : %d~~~~~~\n", result,PGCD_verif(a, b));
+
 		}
-		printf("(II) End of PGCD program\n");
+			
 	}
+	printf("(II) End of PGCD program\n");
+	
   	return 0;
 }
